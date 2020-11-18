@@ -16,20 +16,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import uk.ac.aber.dcs.cs31620.faa.R
 import uk.ac.aber.dcs.cs31620.faa.databinding.FragmentCatsBinding
+import uk.ac.aber.dcs.cs31620.faa.model.Cat
+import uk.ac.aber.dcs.cs31620.faa.model.CatsViewModel
 
 private const val PROXIMITY_KEY = "proximity"
 
 private const val GRID_COLUMN_COUNT = 2
 
 class CatsFragment : Fragment(), NumberPicker.OnValueChangeListener {
+
+    private var oldCatList: LiveData<List<Cat>>? = null
+
+    private lateinit var catsRecyclerAdapter: CatsRecyclerWithListAdapter
     private lateinit var catsFragmentBinding: FragmentCatsBinding
     private lateinit var proximityButton: TextView
     private var proximityValue: Int = 0
+    private val catViewModel: CatsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,19 +77,17 @@ class CatsFragment : Fragment(), NumberPicker.OnValueChangeListener {
 
     private fun addCatsRecyclerView() {
         val listCats = catsFragmentBinding.catList
-        listCats.setHasFixedSize(true)
 
         val gridLayoutManager = GridLayoutManager(context, GRID_COLUMN_COUNT)
         listCats.layoutManager = gridLayoutManager
 
-        /* val cats = CatList().cats
-        val catsRecyclerAdapter = CatsRecyclerWithListAdapter(context, cats.toMutableList())
+        catsRecyclerAdapter = CatsRecyclerWithListAdapter(context)
         listCats.adapter = catsRecyclerAdapter
 
         catsRecyclerAdapter.clickListener = View.OnClickListener { v ->
             val nameView: TextView = v.findViewById(R.id.catNameTextView)
             Toast.makeText(context, "Cat ${nameView.text} clicked", Toast.LENGTH_SHORT).show()
-        } */
+        }
     }
 
     private fun restoreInstanceState(savedInstanceState: Bundle?) {
@@ -154,9 +161,35 @@ class CatsFragment : Fragment(), NumberPicker.OnValueChangeListener {
                 position: Int,
                 id: Long
             ) {
-                Toast.makeText(context, "Item $id selected", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context, "Item $id selected", Toast.LENGTH_SHORT).show()
+                val catList = searchForCats()
+
+                // If we have replaced the LiveData list that we are interested in
+                // then we need to remove any observers associated with the old
+                // LiveData list otherwise it will continue to emit onChange events
+                // that will affect the accuracy of the catsRecyclerAdapter display
+                if (oldCatList != catList) {
+                    oldCatList?.removeObservers(viewLifecycleOwner)
+                    oldCatList = catList
+                }
+
+                // Only add an observer to the LiveData object if it doesn't
+                // already have one. We have to do this check since searchForCats
+                // will just return the same LiveData object if the search criteria have not changed
+                if (!catList.hasObservers()) {
+                    catList.observe(viewLifecycleOwner) { cats ->
+                        catsRecyclerAdapter.changeDataSet(cats.toMutableList())
+                    }
+                }
             }
         }
+    }
+
+    private fun searchForCats(): LiveData<List<Cat>> {
+        val selectedBreed = catsFragmentBinding.breedsSpinner.selectedItem.toString()
+        val selectedGender = catsFragmentBinding.genderSpinner.selectedItem.toString()
+        val selectedAge = catsFragmentBinding.ageSpinner.selectedItem.toString()
+        return catViewModel.getCats(selectedBreed, selectedGender, selectedAge)
     }
 
     override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {

@@ -6,6 +6,7 @@
 package uk.ac.aber.dcs.cs31620.faa.ui.cats
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,15 +14,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import uk.ac.aber.dcs.cs31620.faa.databinding.CatItemBinding
 import uk.ac.aber.dcs.cs31620.faa.model.Cat
 
 class CatsRecyclerWithListAdapter(
-    private val context: Context?,
-    private var dataSet: MutableList<Cat>
-) :
+    private val context: Context?) :
     RecyclerView.Adapter<CatsRecyclerWithListAdapter.ViewHolder>() {
 
+    private var dataSet: MutableList<Cat> = mutableListOf() // Empty list
     var clickListener: View.OnClickListener? = null
 
     inner class ViewHolder(
@@ -36,7 +37,12 @@ class CatsRecyclerWithListAdapter(
 
         fun bindDataSet(cat: Cat) {
             nameView.text = cat.name
-            //imageView.setImageDrawable(AppCompatResources.getDrawable(context!!, cat.resourceId))
+
+            if (cat.imagePath.isNotEmpty()) {
+                Glide.with(context!!)
+                    .load(Uri.parse("file:///android_asset/images/${cat.imagePath}"))
+                    .into(imageView)
+            }
         }
     }
 
