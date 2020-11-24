@@ -29,11 +29,33 @@ android {
     }
 
     buildTypes {
+        debug {
+            // Run code coverage reports by default on debug builds.
+            testCoverageEnabled = true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "testing"
+    productFlavors {
+        in_memory_database {
+            dimension "testing"
+        }
+        persistent_database {
+            dimension "testing"
+        }
+    }
+
+    // Remove inMemoryTestingRelease as it's not needed.
+    android.variantFilter { variant ->
+        if (variant.buildType.name.equals('release')
+                && variant.getFlavors().get(0).name.equals('in_memory_database')) {
+            variant.setIgnore(true);
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

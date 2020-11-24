@@ -29,21 +29,26 @@ import java.time.LocalDateTime
 
 @Database(entities = [Cat::class], version = 1)
 @TypeConverters(DateTimeConverter::class, GenderConverter::class)
-abstract class FaaRoomDatabase : RoomDatabase() {
+abstract class FaaPersistentRoomDatabase : RoomDatabase(), RoomDatabaseI {
 
-    abstract fun catDao(): CatDao
+    abstract override fun catDao(): CatDao
+
+    override fun closeDb() {
+        instance?.close()
+        instance = null
+    }
 
     companion object {
-        private var instance: FaaRoomDatabase? = null
+        private var instance: FaaPersistentRoomDatabase? = null
         private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
-        fun getDatabase(context: Context): FaaRoomDatabase? {
+        fun getDatabase(context: Context): FaaPersistentRoomDatabase? {
             synchronized(this) {
                 if (instance == null) {
                     instance =
-                        Room.databaseBuilder<FaaRoomDatabase>(
+                        Room.databaseBuilder<FaaPersistentRoomDatabase>(
                             context.applicationContext,
-                            FaaRoomDatabase::class.java,
+                            FaaPersistentRoomDatabase::class.java,
                             "faa_database"
                         )
                             .allowMainThreadQueries() // Normally you would't but for testing
@@ -81,7 +86,7 @@ abstract class FaaRoomDatabase : RoomDatabase() {
         // and query command from a resource file. SupportSQLiteDatabase
         // has methods e.g. exeSql that can be used to run SQL and DDL
         // read as strings from resource files.
-        private fun populateDatabase(context: Context, instance: FaaRoomDatabase) {
+        private fun populateDatabase(context: Context, instance: FaaPersistentRoomDatabase) {
             val upToOneYear = LocalDateTime.now().minusDays(365 / 2) // Half year old
             val from1to2Years = LocalDateTime.now().minusDays(365 + (36 / 2)) // 1.5 years old
             val from2to5Years = LocalDateTime.now().minusDays(365 * 3) // 3 years old

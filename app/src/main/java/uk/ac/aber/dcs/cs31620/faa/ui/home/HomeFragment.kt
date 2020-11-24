@@ -36,13 +36,16 @@ class HomeFragment : Fragment() {
         val recentCats = catViewModel.recentCats
 
         recentCats.observe(viewLifecycleOwner){ cats ->
-            val catPos = Random.nextInt(cats.size)
-            val catImage = cats[catPos].imagePath
             Log.i("FAA", cats.size.toString())
-            if (catImage.isNotEmpty()) {
-                Glide.with(this)
-                    .load(Uri.parse("file:///android_asset/images/${catImage}"))
-                    .into(featuredCatImg)
+            if (cats.isNotEmpty()) {
+                val catPos = Random.nextInt(cats.size)
+                val catImage = cats[catPos].imagePath
+
+                if (catImage.isNotEmpty()) {
+                    Glide.with(this)
+                        .load(Uri.parse("file:///android_asset/images/${catImage}"))
+                        .into(featuredCatImg)
+                }
             }
         }
 

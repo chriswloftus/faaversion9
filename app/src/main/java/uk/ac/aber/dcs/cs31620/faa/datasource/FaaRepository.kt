@@ -15,7 +15,7 @@ import uk.ac.aber.dcs.cs31620.faa.model.Gender
 import java.time.LocalDateTime
 
 class FaaRepository(application: Application) {
-    private val catDao = FaaRoomDatabase.getDatabase(application)!!.catDao()
+    private val catDao = Injection.getDatabase(application).catDao()
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     fun insert(cat: Cat){
