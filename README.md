@@ -1,9 +1,9 @@
 # README
 
-Code for the CS31620 FAA (Feline Adoption Agency) app, version 7. In development, do not use.
+Code for the CS31620 FAA (Feline Adoption Agency) app, version 8. Do not use until complete
 
 This is a Kotlin project.
 
-This is version developed by students in workshop 17.
+This is version developed by students in workshop 18.
 
-This adds ViewModels to the UI and uses LiveData to obtain data from database queries when displaying the data.
+This version will focus on Gradle source sets and Android testing.
