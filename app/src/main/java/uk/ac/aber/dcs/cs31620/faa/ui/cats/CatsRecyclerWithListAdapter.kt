@@ -40,7 +40,7 @@ class CatsRecyclerWithListAdapter(
 
             if (cat.imagePath.isNotEmpty()) {
                 Glide.with(context!!)
-                    .load(Uri.parse("file:///android_asset/images/${cat.imagePath}"))
+                    .load(Uri.parse(cat.imagePath))
                     .into(imageView)
             }
         }

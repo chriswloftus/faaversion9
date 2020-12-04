@@ -14,5 +14,14 @@
         android:id="@+id/navigation_cats"
         android:name="uk.ac.aber.dcs.cs31620.faa.ui.cats.CatsFragment"
         android:label="@string/fragmentCats"
-        tools:layout="@layout/fragment_cats" />
+        tools:layout="@layout/fragment_cats" >
+        <action
+            android:id="@+id/action_navigation_cats_to_addCatFragment"
+            app:destination="@id/addCatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCatFragment"
+        android:name="uk.ac.aber.dcs.cs31620.faa.ui.cats.AddCatFragment"
+        android:label="@string/fragmentAddCat"
+        tools:layout="@layout/fragment_add_cat" />
 </navigation>

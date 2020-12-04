@@ -18,6 +18,9 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.observe
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
@@ -61,7 +64,11 @@ class CatsFragment : Fragment(), NumberPicker.OnValueChangeListener {
         val fab = catsFragmentBinding.fabAdd
 
         fab.setOnClickListener {
-            val snackbar = Snackbar.make(it, "Create cat FAB", Snackbar.LENGTH_LONG)
+            // Here we want to navigate to the AddCatFragment
+
+            val navController = findNavController()
+            navController.navigate(R.id.action_navigation_cats_to_addCatFragment)
+            /*val snackbar = Snackbar.make(it, "Create cat FAB", Snackbar.LENGTH_LONG)
 
             // Obtain the BottomNavigationView from the parent activity so that we
             // can anchor to it
@@ -71,7 +78,7 @@ class CatsFragment : Fragment(), NumberPicker.OnValueChangeListener {
             snackbar.setAction("Undo") {
                 // Code to handle undo goes here
             }
-            snackbar.show()
+            snackbar.show()*/
         }
     }
 

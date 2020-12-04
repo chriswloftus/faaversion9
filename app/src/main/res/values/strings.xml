@@ -4,8 +4,8 @@
     <string name="cats">Cats</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="framentHome">Fragment home</string>
-    <string name="fragmentCats">Fragment cats</string>
+    <string name="framentHome">Home</string>
+    <string name="fragmentCats">Cats</string>
     <string name="nav_header_image_description">Image of small kitten</string>
     <string name="nav_login">Login</string>
     <string name="nav_support">Support</string>
@@ -30,6 +30,25 @@
     <string name="inmate_image_description">Picture of one of the cats</string>
     <string name="delete_button_description">Delete cat button</string>
     <string name="default_cat_name">Cat clone</string>
+
+    <string name="action_view_cats">uk.ac.aber.dcs.cs31620.faa.action.VIEW_CATS</string>
+    <string name="cats_uri">http://faa.cs31620.dcs.aber.ac.uk/cats</string>
+    <string name="default_image_path">file:///android_asset/images/default_image.png</string>
+
+    <string name="cat_picture_image">Picture of new cat</string>
+    <string name="cat_name">Name:</string>
+    <string name="catGender">Gender:</string>
+    <string name="catAge">Age:</string>
+    <string name="catBreed">Breed:</string>
+    <string name="new_cat_description">Enter description here</string>
+    <string name="dob">Date of birth:</string>
+    <string name="dob_entry">Enter date here</string>
+    <string name="enterImageMsg">Tap image to add/replace image</string>
+    <string name="date_format">dd/MM/yyyy</string>
+    <string name="cannot_create_image_file">Cannot take a picture, possibly insufficient space</string>
+    <string name="missing_data">Name and date fields must have values</string>
+    <string name="fragmentAddCat">Add cat</string>
+
 
     <!-- Arrays of values -->
     <string-array name="gender_array">

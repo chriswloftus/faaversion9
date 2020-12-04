@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import com.bumptech.glide.Glide
 import uk.ac.aber.dcs.cs31620.faa.databinding.FragmentHomeBinding
 import uk.ac.aber.dcs.cs31620.faa.model.RecentCatsViewModel
@@ -43,7 +44,7 @@ class HomeFragment : Fragment() {
 
                 if (catImage.isNotEmpty()) {
                     Glide.with(this)
-                        .load(Uri.parse("file:///android_asset/images/${catImage}"))
+                        .load(Uri.parse(catImage))
                         .into(featuredCatImg)
                 }
             }

@@ -102,7 +102,7 @@ abstract class FaaPersistentRoomDatabase : RoomDatabase(), RoomDatabaseI {
                 "Lorem ipsum dolor sit amet, consectetur...",
                 upToOneYear,
                 veryRecentAdmission,
-                "cat1.png"
+                "file:///android_asset/images/cat1.png"
             )
 
             val from1to2YearsCat = Cat(
@@ -113,7 +113,7 @@ abstract class FaaPersistentRoomDatabase : RoomDatabase(), RoomDatabaseI {
                 "Lorem ipsum dolor sit amet, consectetur...",
                 from1to2Years,
                 admissionsDate,
-                "cat1.png"
+                "file:///android_asset/images/cat1.png"
             )
 
             val from2to5YearsCat = Cat(
@@ -124,7 +124,7 @@ abstract class FaaPersistentRoomDatabase : RoomDatabase(), RoomDatabaseI {
                 "Lorem ipsum dolor sit amet, consectetur...",
                 from2to5Years,
                 admissionsDate,
-                "cat1.png"
+                "file:///android_asset/images/cat1.png"
             )
 
             val over5YearsCat = Cat(
@@ -135,7 +135,7 @@ abstract class FaaPersistentRoomDatabase : RoomDatabase(), RoomDatabaseI {
                 "Lorem ipsum dolor sit amet, consectetur...",
                 over5Years,
                 admissionsDate,
-                "cat1.png"
+                "file:///android_asset/images/cat1.png"
             )
 
             val catList = mutableListOf(
