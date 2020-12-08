@@ -48,6 +48,7 @@
     <string name="cannot_create_image_file">Cannot take a picture, possibly insufficient space</string>
     <string name="missing_data">Name and date fields must have values</string>
     <string name="fragmentAddCat">Add cat</string>
+    <string name="cannotTakePicture">Unable to start Camera app</string>
 
 
     <!-- Arrays of values -->

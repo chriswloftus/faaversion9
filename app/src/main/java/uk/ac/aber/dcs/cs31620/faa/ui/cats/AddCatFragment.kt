@@ -2,6 +2,7 @@ package uk.ac.aber.dcs.cs31620.faa.ui.cats
 
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -203,9 +204,14 @@ class AddCatFragment : Fragment(), View.OnClickListener {
                 it
             )
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-            // Only continue if a receiver exists
-            takePictureIntent.resolveActivity(requireActivity().packageManager)?.let {
+            // Request will fail if a camera app not available.
+            // This used to use takePictureIntent.resolveActivity(requireActivity().packageManager)
+            // However this requires a <query> element to be added to the manifest for
+            // Android 30+. The following is simpler.
+            try {
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+            }catch(e: ActivityNotFoundException){
+                Toast.makeText(requireContext(), R.string.cannotTakePicture, Toast.LENGTH_LONG).show()
             }
         }
 

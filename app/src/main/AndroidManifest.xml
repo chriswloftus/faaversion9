@@ -51,11 +51,12 @@
 
     </application>
 
-    <queries>
-        <!-- Camera Now required for Android 20+ -->
+    <!-- Required if we use resolveQuery method on an Intent from Android 11+ API 30+
+         In this case if we were checking to see if the Camera App exists -->
+    <!--queries>
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
         </intent>
-    </queries>
+    </queries-->
 
 </manifest>
