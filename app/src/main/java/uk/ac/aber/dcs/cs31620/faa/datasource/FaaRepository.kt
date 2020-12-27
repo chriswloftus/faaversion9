@@ -16,16 +16,16 @@ import java.time.LocalDateTime
 
 class FaaRepository(application: Application) {
     private val catDao = Injection.getDatabase(application).catDao()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     fun insert(cat: Cat){
-        coroutineScope.launch(Dispatchers.IO) {
+        coroutineScope.launch() {
             catDao.insertSingleCat(cat)
         }
     }
 
     fun insertMultipleCats(cats: List<Cat>){
-        coroutineScope.launch(Dispatchers.IO) {
+        coroutineScope.launch() {
             catDao.insertMultipleCats(cats)
         }
     }

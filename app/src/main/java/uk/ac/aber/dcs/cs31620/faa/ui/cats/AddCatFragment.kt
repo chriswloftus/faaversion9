@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -204,6 +205,7 @@ class AddCatFragment : Fragment(), View.OnClickListener {
                 it
             )
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+            takePictureIntent.addFlags(FLAG_GRANT_WRITE_URI_PERMISSION)
             // Request will fail if a camera app not available.
             // This used to use takePictureIntent.resolveActivity(requireActivity().packageManager)
             // However this requires a <query> element to be added to the manifest for
