@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -39,7 +40,6 @@ private const val NAME_KEY = "NAME"
 private const val DATE_KEY = "DATE"
 private const val IMAGE_PATH_KEY = "IMAGE_PATH"
 private const val DESCRIPTION_KEY = "DESCRIPTION"
-private const val REQUEST_TAKE_PHOTO = 1
 
 class AddCatFragment : Fragment(), View.OnClickListener {
 
@@ -69,6 +69,8 @@ class AddCatFragment : Fragment(), View.OnClickListener {
         val breedValues = values.copyOfRange(1, values.size)
 
         addCatFragmentBinding.datePicker.setOnClickListener(this)
+
+        // This is the FAB to add a cat
         addCatFragmentBinding.add.setOnClickListener(this)
 
         restoreInstanceState(savedInstanceState)
@@ -211,22 +213,21 @@ class AddCatFragment : Fragment(), View.OnClickListener {
             // However this requires a <query> element to be added to the manifest for
             // Android 30+. The following is simpler.
             try {
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
-            }catch(e: ActivityNotFoundException){
-                Toast.makeText(requireContext(), R.string.cannotTakePicture, Toast.LENGTH_LONG).show()
+                resultLauncher.launch(takePictureIntent)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(requireContext(), R.string.cannotTakePicture, Toast.LENGTH_LONG)
+                    .show()
             }
         }
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_TAKE_PHOTO) {
-            if (resultCode == RESULT_OK) {
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
                 // We can get the file
                 photoFile?.let {
-                    imagePath = "file://${it.absolutePath}"
+                    imagePath = "file://${photoFile!!.absolutePath}"
                     Glide.with(this)
                         .load(Uri.parse(imagePath))
                         .error(R.drawable.default_image)
@@ -234,7 +235,6 @@ class AddCatFragment : Fragment(), View.OnClickListener {
                 }
             }
         }
-    }
 
     private fun insertCat() {
         // We need to check that values are sensible. If they're not then we won't insert
