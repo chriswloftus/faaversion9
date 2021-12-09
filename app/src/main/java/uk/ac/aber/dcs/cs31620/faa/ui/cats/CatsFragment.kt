@@ -18,12 +18,8 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.observe
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.snackbar.Snackbar
 import uk.ac.aber.dcs.cs31620.faa.R
 import uk.ac.aber.dcs.cs31620.faa.databinding.FragmentCatsBinding
 import uk.ac.aber.dcs.cs31620.faa.model.Cat
@@ -46,7 +42,7 @@ class CatsFragment : Fragment(), NumberPicker.OnValueChangeListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         catsFragmentBinding = FragmentCatsBinding.inflate(inflater, container, false)
 
         setupSearchFields()

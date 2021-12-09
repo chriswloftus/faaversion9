@@ -51,7 +51,7 @@ abstract class FaaPersistentRoomDatabase : RoomDatabase(), RoomDatabaseI {
                             FaaPersistentRoomDatabase::class.java,
                             "faa_database"
                         )
-                            .allowMainThreadQueries() // Normally you would't but for testing
+                            //.allowMainThreadQueries() // Normally you would't but for testing
                             .addCallback(roomDatabaseCallback(context))
                             //.addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                             .build()

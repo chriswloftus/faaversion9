@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 
 @Dao
 interface CatDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert
     fun insertSingleCat(cat: Cat)
 
     @Insert
