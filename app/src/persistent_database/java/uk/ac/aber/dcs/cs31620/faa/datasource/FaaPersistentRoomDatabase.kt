@@ -86,7 +86,7 @@ abstract class FaaPersistentRoomDatabase : RoomDatabase(), RoomDatabaseI {
         // and query command from a resource file. SupportSQLiteDatabase
         // has methods e.g. exeSql that can be used to run SQL and DDL
         // read as strings from resource files.
-        private fun populateDatabase(context: Context, instance: FaaPersistentRoomDatabase) {
+        private suspend fun populateDatabase(context: Context, instance: FaaPersistentRoomDatabase) {
             val upToOneYear = LocalDateTime.now().minusDays(365 / 2) // Half year old
             val from1to2Years = LocalDateTime.now().minusDays(365 + (36 / 2)) // 1.5 years old
             val from2to5Years = LocalDateTime.now().minusDays(365 * 3) // 3 years old

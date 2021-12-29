@@ -56,6 +56,10 @@ class CatsFragment : Fragment(), NumberPicker.OnValueChangeListener {
         return catsFragmentBinding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     private fun addSnackbar() {
         val fab = catsFragmentBinding.fabAdd
 
