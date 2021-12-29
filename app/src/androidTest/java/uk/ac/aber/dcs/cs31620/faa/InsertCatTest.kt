@@ -1,10 +1,12 @@
 package uk.ac.aber.dcs.cs31620.faa
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import junit.framework.Assert.assertEquals
+import androidx.test.platform.app.InstrumentationRegistry
+
+import kotlinx.coroutines.runBlocking
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -32,7 +34,7 @@ class InsertCatTest {
     @Before
     @Throws(Exception::class)
     fun createDb() {
-        val context = InstrumentationRegistry.getTargetContext()
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
         db = Injection.getDatabase(context)
         catDao = db.catDao()
     }
@@ -43,7 +45,7 @@ class InsertCatTest {
     }
 
     @Test
-    fun onInsertingACat_checkThat_catWasInserted() {
+    fun onInsertingACat_checkThat_catWasInserted() = runBlocking {
         val cats = testUtil.createMaleRecent(1, 365)
 
         catDao.insertSingleCat(cats[0])
@@ -53,7 +55,7 @@ class InsertCatTest {
     }
 
     @Test
-    fun onInsertingTwoCatsWithDifferentBreeds_checkThat_weCanFindByBreed() {
+    fun onInsertingTwoCatsWithDifferentBreeds_checkThat_weCanFindByBreed() = runBlocking {
         val cats = testUtil.createMaleRecent(2, 365)
         val cat2 = cats[0]
         cats[1].breed = "TEST-BREED"
@@ -65,7 +67,7 @@ class InsertCatTest {
     }
 
     @Test
-    fun onInsertCatsOfDifferentAges_checkThat_weCanFindForDifferentAgeDateRanges() {
+    fun onInsertCatsOfDifferentAges_checkThat_weCanFindForDifferentAgeDateRanges() = runBlocking {
         val halfYearCats = testUtil.createMaleRecent(2, 365 / 2)
         val oneYearCats = testUtil.createMaleRecent(2, 365)
         val fiveYearCats = testUtil.createMaleRecent(2, 365 * 5)
